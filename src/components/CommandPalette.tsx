@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Folder, Command, ArrowRight, X } from 'lucide-react'
 import { PROJECTS, ProjectData } from '../data/projectsData'
@@ -32,9 +32,10 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
 
   return (
     <>
-      {/* Search Command Trigger Button */}
+      {/* Search Command Trigger Button - Desktop & Mobile Adaptive */}
       <button
         onClick={() => setIsOpen(true)}
+        aria-label="Search Projects"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -42,11 +43,11 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
           padding: '6px 12px',
           borderRadius: '6px',
           border: '1px solid var(--border-color)',
-          background: 'rgba(255, 255, 255, 0.03)',
+          background: 'rgba(255, 255, 255, 0.04)',
           color: 'var(--text-tertiary)',
           fontSize: '0.8rem',
           cursor: 'pointer',
-          transition: 'all 0.2s'
+          transition: 'all 0.2s ease'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = 'var(--text-secondary)'
@@ -57,9 +58,9 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
           e.currentTarget.style.color = 'var(--text-tertiary)'
         }}
       >
-        <Command size={14} />
-        <span>Search projects...</span>
-        <kbd style={{
+        <Search size={15} style={{ color: 'var(--text-secondary)' }} />
+        <span className="desktop-only">Search projects...</span>
+        <kbd className="desktop-only" style={{
           padding: '2px 5px',
           borderRadius: '4px',
           background: 'var(--bg-tertiary)',
@@ -88,8 +89,8 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
               display: 'flex',
               alignItems: 'flex-start',
               justifyContent: 'center',
-              paddingTop: '12vh',
-              background: 'rgba(0, 0, 0, 0.85)',
+              paddingTop: '10vh',
+              background: 'rgba(0, 0, 0, 0.88)',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               cursor: 'pointer'
@@ -103,7 +104,7 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
               style={{
-                width: '90%',
+                width: '92%',
                 maxWidth: '620px',
                 background: 'var(--bg-secondary)',
                 border: '1px solid var(--border-hover)',

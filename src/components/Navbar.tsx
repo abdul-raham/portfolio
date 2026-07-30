@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Menu, X, Layers, Briefcase, Mail, User } from 'lucide-react'
 import { CommandPalette } from './CommandPalette'
@@ -94,8 +94,8 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
           </nav>
         </div>
 
-        {/* Mobile Command Palette & Hamburger Button */}
-        <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Mobile Command Palette Icon & Hamburger Button */}
+        <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <CommandPalette onSelectProject={onSelectProject} />
           <button
             onClick={() => setMobileSidebarOpen(true)}
@@ -107,6 +107,8 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
               borderRadius: '8px',
               padding: '8px',
               display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               cursor: 'pointer'
             }}
           >
@@ -128,14 +130,14 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
               style={{
                 position: 'fixed',
                 inset: 0,
-                background: 'rgba(0, 0, 0, 0.8)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
+                background: 'rgba(0, 0, 0, 0.85)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 zIndex: 1000
               }}
             />
 
-            {/* Sliding Sidebar */}
+            {/* Sliding High-Fidelity Glass Sidebar */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -146,27 +148,29 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                 top: 0,
                 right: 0,
                 bottom: 0,
-                width: '280px',
+                width: '300px',
                 maxWidth: '85vw',
-                background: 'var(--bg-secondary)',
-                borderLeft: '1px solid var(--border-color)',
+                background: 'rgba(12, 12, 16, 0.96)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                borderLeft: '1px solid rgba(255, 255, 255, 0.12)',
                 zIndex: 1001,
                 padding: '1.75rem',
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '-10px 0 30px rgba(0,0,0,0.8)'
+                boxShadow: '-10px 0 40px rgba(0, 0, 0, 0.95), 0 0 20px rgba(0, 255, 136, 0.05)'
               }}
             >
               {/* Sidebar Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
-                <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.25rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
+                <span style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--text-primary)' }}>
                   Abdurrahman<span style={{ color: '#00ff88' }}>.Dev</span>
                 </span>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
                   aria-label="Close Sidebar"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: 'rgba(255, 255, 255, 0.06)',
                     border: '1px solid var(--border-color)',
                     color: 'var(--text-secondary)',
                     borderRadius: '50%',
@@ -182,25 +186,27 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                 </button>
               </div>
 
-              {/* Sidebar Links */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flexGrow: 1 }}>
+              {/* Sidebar Links with Frosted Glass Item Cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', flexGrow: 1 }}>
                 <button
                   onClick={() => {
                     setMobileSidebarOpen(false)
                     onOpenAbout()
                   }}
                   style={{
-                    background: 'transparent',
-                    border: 'none',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
                     color: 'var(--text-primary)',
                     textAlign: 'left',
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: 0
+                    padding: '0.85rem 1rem',
+                    transition: 'all 0.2s ease'
                   }}
                 >
                   <User size={18} style={{ color: '#00ff88' }} /> About & Bio
@@ -210,13 +216,17 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#projects" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
                     color: 'var(--text-primary)',
                     textDecoration: 'none',
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.75rem'
+                    gap: '0.75rem',
+                    padding: '0.85rem 1rem'
                   }}
                 >
                   <Layers size={18} style={{ color: '#38bdf8' }} /> Projects
@@ -226,13 +236,17 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#experience" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
                     color: 'var(--text-primary)',
                     textDecoration: 'none',
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.75rem'
+                    gap: '0.75rem',
+                    padding: '0.85rem 1rem'
                   }}
                 >
                   <Briefcase size={18} style={{ color: '#61dafb' }} /> Career Timeline
@@ -244,17 +258,18 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     onOpenContact()
                   }}
                   style={{
-                    background: 'transparent',
-                    border: 'none',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
                     color: 'var(--text-primary)',
                     textAlign: 'left',
-                    fontSize: '1.05rem',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: 0
+                    padding: '0.85rem 1rem'
                   }}
                 >
                   <Mail size={18} style={{ color: '#f472b6' }} /> Direct Contact
@@ -262,12 +277,22 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
               </div>
 
               {/* Footer Socials */}
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', display: 'flex', gap: '1.25rem', color: 'var(--text-secondary)' }}>
-                <a href="https://github.com/abdul-raham" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
-                  <Github size={20} />
+              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '1.5rem', display: 'flex', gap: '1rem', color: 'var(--text-secondary)' }}>
+                <a 
+                  href="https://github.com/abdul-raham" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.65rem', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '0.85rem', textDecoration: 'none' }}
+                >
+                  <Github size={16} /> GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
-                  <Linkedin size={20} />
+                <a 
+                  href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.65rem', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '0.85rem', textDecoration: 'none' }}
+                >
+                  <Linkedin size={16} /> LinkedIn
                 </a>
               </div>
             </motion.div>
