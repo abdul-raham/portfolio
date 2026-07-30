@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { motion } from 'framer-motion'
 
-interface ReflectiveCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ReflectiveCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'> {
   children: React.ReactNode
   className?: string
   style?: React.CSSProperties

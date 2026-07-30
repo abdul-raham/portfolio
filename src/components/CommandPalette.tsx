@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Folder, Command, ArrowRight, X, ExternalLink } from 'lucide-react'
+import { Search, Folder, Command, ArrowRight, X } from 'lucide-react'
 import { PROJECTS, ProjectData } from '../data/projectsData'
 
 interface CommandPaletteProps {
@@ -216,7 +216,7 @@ export function CommandPalette({ onSelectProject }: CommandPaletteProps) {
                 fontSize: '0.75rem',
                 color: 'var(--text-tertiary)',
                 display: 'flex',
-                justify: 'space-between',
+                justifyContent: 'space-between',
                 background: 'rgba(0,0,0,0.2)'
               }}>
                 <span>Press <strong>Esc</strong> or click outside to close</span>

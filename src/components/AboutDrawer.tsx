@@ -1,6 +1,5 @@
-import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, GraduationCap, Building2, Activity, ShoppingBag, ShieldCheck, Terminal, Award } from 'lucide-react'
+import { X, Building2, Activity, ShoppingBag, Award, Terminal } from 'lucide-react'
 
 interface AboutDrawerProps {
   isOpen: boolean

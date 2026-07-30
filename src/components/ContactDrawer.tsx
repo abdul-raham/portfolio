@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, Copy, Check, X, Send, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Mail, Copy, Check, X, Send, ShieldCheck } from 'lucide-react'
 
 interface ContactDrawerProps {
   isOpen: boolean
@@ -58,6 +58,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
           {/* Close Button */}
           <button
             onClick={onClose}
+            aria-label="Close Contact Modal"
             style={{
               position: 'absolute',
               top: '1.5rem',

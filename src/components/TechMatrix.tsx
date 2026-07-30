@@ -1,6 +1,5 @@
-import React from 'react'
 import { motion } from 'framer-motion'
-import { Cpu, Layout, Server, Database, ShieldCheck } from 'lucide-react'
+import { Layout, Server, Database } from 'lucide-react'
 import { ReflectiveCard } from './ReflectiveCard'
 
 const SKILL_DOMAINS = [
