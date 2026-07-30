@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Index Link
+Sitemap: https://portfolio-xi-coral-18.vercel.app/sitemap.xml
