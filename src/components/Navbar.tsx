@@ -130,14 +130,14 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
               style={{
                 position: 'fixed',
                 inset: 0,
-                background: 'rgba(0, 0, 0, 0.85)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
+                background: 'rgba(0, 0, 0, 0.92)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
                 zIndex: 1000
               }}
             />
 
-            {/* Sliding High-Fidelity Glass Sidebar */}
+            {/* Sliding Solid Dark Obsidian Sidebar */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -150,32 +150,30 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                 bottom: 0,
                 width: '300px',
                 maxWidth: '85vw',
-                background: 'rgba(12, 12, 16, 0.96)',
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-                borderLeft: '1px solid rgba(255, 255, 255, 0.12)',
+                background: '#0a0a0f',
+                borderLeft: '1px solid rgba(255, 255, 255, 0.15)',
                 zIndex: 1001,
                 padding: '1.75rem',
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '-10px 0 40px rgba(0, 0, 0, 0.95), 0 0 20px rgba(0, 255, 136, 0.05)'
+                boxShadow: '-15px 0 50px rgba(0, 0, 0, 0.98), 0 0 30px rgba(0, 255, 136, 0.08)'
               }}
             >
               {/* Sidebar Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.25rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1rem' }}>
-                <span style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--text-primary)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.25rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
+                <span style={{ fontWeight: 800, fontSize: '1.15rem', color: '#ffffff' }}>
                   Abdurrahman<span style={{ color: '#00ff88' }}>.Dev</span>
                 </span>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
                   aria-label="Close Sidebar"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--text-secondary)',
+                    background: '#16161e',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    color: '#ffffff',
                     borderRadius: '50%',
-                    width: '34px',
-                    height: '34px',
+                    width: '36px',
+                    height: '36px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -186,7 +184,7 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                 </button>
               </div>
 
-              {/* Sidebar Links with Frosted Glass Item Cards */}
+              {/* Sidebar Links with Solid High-Contrast Dark Cards */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', flexGrow: 1 }}>
                 <button
                   onClick={() => {
@@ -194,10 +192,10 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     onOpenAbout()
                   }}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: '#14141c',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                     borderRadius: '10px',
-                    color: 'var(--text-primary)',
+                    color: '#ffffff',
                     textAlign: 'left',
                     fontSize: '1rem',
                     fontWeight: 600,
@@ -205,7 +203,7 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.85rem 1rem',
+                    padding: '0.9rem 1.1rem',
                     transition: 'all 0.2s ease'
                   }}
                 >
@@ -216,17 +214,17 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#projects" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: '#14141c',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                     borderRadius: '10px',
-                    color: 'var(--text-primary)',
+                    color: '#ffffff',
                     textDecoration: 'none',
                     fontSize: '1rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.85rem 1rem'
+                    padding: '0.9rem 1.1rem'
                   }}
                 >
                   <Layers size={18} style={{ color: '#38bdf8' }} /> Projects
@@ -236,17 +234,17 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#experience" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: '#14141c',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                     borderRadius: '10px',
-                    color: 'var(--text-primary)',
+                    color: '#ffffff',
                     textDecoration: 'none',
                     fontSize: '1rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.85rem 1rem'
+                    padding: '0.9rem 1.1rem'
                   }}
                 >
                   <Briefcase size={18} style={{ color: '#61dafb' }} /> Career Timeline
@@ -258,10 +256,10 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     onOpenContact()
                   }}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: '#14141c',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
                     borderRadius: '10px',
-                    color: 'var(--text-primary)',
+                    color: '#ffffff',
                     textAlign: 'left',
                     fontSize: '1rem',
                     fontWeight: 600,
@@ -269,7 +267,7 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.85rem 1rem'
+                    padding: '0.9rem 1.1rem'
                   }}
                 >
                   <Mail size={18} style={{ color: '#f472b6' }} /> Direct Contact
@@ -277,12 +275,12 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
               </div>
 
               {/* Footer Socials */}
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '1.5rem', display: 'flex', gap: '1rem', color: 'var(--text-secondary)' }}>
+              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1.5rem', display: 'flex', gap: '1rem' }}>
                 <a 
                   href="https://github.com/abdul-raham" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.65rem', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '0.85rem', textDecoration: 'none' }}
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', borderRadius: '8px', background: '#14141c', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '0.875rem', textDecoration: 'none', fontWeight: 500 }}
                 >
                   <Github size={16} /> GitHub
                 </a>
@@ -290,7 +288,7 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.65rem', borderRadius: '8px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '0.85rem', textDecoration: 'none' }}
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', borderRadius: '8px', background: '#14141c', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '0.875rem', textDecoration: 'none', fontWeight: 500 }}
                 >
                   <Linkedin size={16} /> LinkedIn
                 </a>
