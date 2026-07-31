@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ExternalLink, Github, Lock, Cpu, CheckCircle2, Layers, Globe, Play } from 'lucide-react'
 import { ProjectData } from '../data/projectsData'
@@ -31,7 +31,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
           alignItems: 'center',
           justifyContent: 'center',
           padding: '1rem',
-          background: 'rgba(0, 0, 0, 0.85)',
+          background: 'rgba(0, 0, 0, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           cursor: 'pointer'
@@ -51,7 +51,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
             maxHeight: '90vh',
             overflowY: 'auto',
             background: 'var(--bg-secondary)',
-            padding: ' clamp(1.25rem, 4vw, 2.5rem)',
+            padding: 'clamp(1.25rem, 4vw, 2.5rem)',
             position: 'relative',
             borderRadius: '16px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',

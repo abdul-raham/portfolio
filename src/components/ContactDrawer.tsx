@@ -29,8 +29,8 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1.5rem',
-          background: 'rgba(0, 0, 0, 0.85)',
+          padding: '1.25rem',
+          background: 'rgba(0, 0, 0, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           cursor: 'pointer'
@@ -48,7 +48,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
             width: '100%',
             maxWidth: '540px',
             background: 'var(--bg-secondary)',
-            padding: '2.25rem',
+            padding: 'clamp(1.5rem, 5vw, 2.25rem)',
             position: 'relative',
             borderRadius: '16px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9)',
@@ -61,8 +61,8 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
             aria-label="Close Contact Modal"
             style={{
               position: 'absolute',
-              top: '1.5rem',
-              right: '1.5rem',
+              top: '1.25rem',
+              right: '1.25rem',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid var(--border-color)',
               color: 'var(--text-secondary)',
@@ -83,7 +83,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
             <ShieldCheck size={16} /> Direct Contact & Inquiries
           </div>
 
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.03em', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 1.75rem)', fontWeight: 700, letterSpacing: '-0.03em', marginBottom: '0.75rem' }}>
             Get in Touch
           </h2>
 
@@ -100,13 +100,15 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: '1.5rem'
+            marginBottom: '1.5rem',
+            flexWrap: 'wrap',
+            gap: '0.75rem'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Mail size={18} style={{ color: '#00ff88' }} />
               <div>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>Official Email</div>
-                <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{email}</div>
+                <div style={{ fontWeight: 600, fontSize: '0.925rem', color: 'var(--text-primary)', wordBreak: 'break-all' }}>{email}</div>
               </div>
             </div>
 

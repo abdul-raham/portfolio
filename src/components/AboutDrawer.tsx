@@ -19,8 +19,8 @@ export function AboutDrawer({ isOpen, onClose }: AboutDrawerProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1.5rem',
-          background: 'rgba(0, 0, 0, 0.85)',
+          padding: '1.25rem',
+          background: 'rgba(0, 0, 0, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           cursor: 'pointer'
@@ -40,7 +40,7 @@ export function AboutDrawer({ isOpen, onClose }: AboutDrawerProps) {
             maxHeight: '90vh',
             overflowY: 'auto',
             background: 'var(--bg-secondary)',
-            padding: '2.5rem',
+            padding: 'clamp(1.5rem, 5vw, 2.5rem)',
             position: 'relative',
             borderRadius: '16px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9)',
@@ -53,8 +53,8 @@ export function AboutDrawer({ isOpen, onClose }: AboutDrawerProps) {
             aria-label="Close Modal"
             style={{
               position: 'absolute',
-              top: '1.5rem',
-              right: '1.5rem',
+              top: '1.25rem',
+              right: '1.25rem',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid var(--border-color)',
               color: 'var(--text-secondary)',
@@ -75,7 +75,7 @@ export function AboutDrawer({ isOpen, onClose }: AboutDrawerProps) {
             <Award size={16} /> Engineering & Founder Bio
           </div>
 
-          <h2 style={{ fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.03em', marginBottom: '1rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 700, letterSpacing: '-0.03em', marginBottom: '1rem' }}>
             About Abdulrahman Bakare
           </h2>
 

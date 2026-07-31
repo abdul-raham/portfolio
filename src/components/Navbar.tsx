@@ -14,162 +14,178 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   return (
-    <header className="glass" style={{
+    <header style={{
       position: 'fixed',
       top: 0,
       left: 0,
       right: 0,
       zIndex: 100,
-      height: '64px',
-      display: 'flex',
-      alignItems: 'center'
+      padding: '0.75rem 1rem'
     }}>
-      <div className="container" style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%'
-      }}>
-        <motion.a 
-          href="#"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          style={{ fontWeight: 800, letterSpacing: '-0.03em', fontSize: '1.2rem', color: 'var(--text-primary)', textDecoration: 'none' }}
-        >
-          Abdurrahman<span style={{ color: '#00ff88' }}>.Dev</span>
-        </motion.a>
-
-        {/* Desktop Navigation Links */}
-        <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <CommandPalette onSelectProject={onSelectProject} />
-
-          <nav style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-            <button
-              onClick={onOpenAbout}
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
-            >
-              About
-            </button>
-            <a 
-              href="#projects" 
-              style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, transition: 'color 0.2s' }}
-            >
-              Projects
-            </a>
-            <a 
-              href="#experience" 
-              style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, transition: 'color 0.2s' }}
-            >
-              Timeline
-            </a>
-            <button
-              onClick={onOpenContact}
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
-            >
-              Contact
-            </button>
-            <a 
-              href="https://github.com/abdul-raham" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center' }}
-            >
-              <Github size={18} />
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center' }}
-            >
-              <Linkedin size={18} />
-            </a>
-          </nav>
-        </div>
-
-        {/* Mobile Command Palette Icon & Hamburger Button */}
-        <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <CommandPalette onSelectProject={onSelectProject} />
-          <button
-            onClick={() => setMobileSidebarOpen(true)}
-            aria-label="Open Navigation Sidebar"
-            style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--border-color)',
-              color: 'var(--text-primary)',
-              borderRadius: '8px',
-              padding: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer'
-            }}
+      <div className="container" style={{ padding: 0 }}>
+        {/* Floating Pill Glass Navbar */}
+        <div style={{
+          display: 'flex',
+          height: '56px',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderRadius: '100px',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          background: 'rgba(10, 10, 14, 0.75)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          padding: '0 1.25rem',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.03)'
+        }}>
+          <motion.a 
+            href="#"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ fontWeight: 800, letterSpacing: '-0.03em', fontSize: '1.15rem', color: '#ffffff', textDecoration: 'none' }}
           >
-            <Menu size={20} />
-          </button>
+            Abdurrahman<span style={{ color: '#00ff88' }}>.Dev</span>
+          </motion.a>
+
+          {/* Desktop Navigation Links */}
+          <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <CommandPalette onSelectProject={onSelectProject} />
+
+            <nav style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+              <button
+                onClick={onOpenAbout}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+              >
+                About
+              </button>
+              <a 
+                href="#projects" 
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, transition: 'color 0.2s' }}
+              >
+                Projects
+              </a>
+              <a 
+                href="#experience" 
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, transition: 'color 0.2s' }}
+              >
+                Timeline
+              </a>
+              <button
+                onClick={onOpenContact}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer', transition: 'color 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+              >
+                Contact
+              </button>
+              <a 
+                href="https://github.com/abdul-raham" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center' }}
+              >
+                <Github size={18} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center' }}
+              >
+                <Linkedin size={18} />
+              </a>
+            </nav>
+          </div>
+
+          {/* Mobile Command Palette Icon & Hamburger Button */}
+          <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <CommandPalette onSelectProject={onSelectProject} />
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              aria-label="Open Navigation Sidebar"
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                color: '#ffffff',
+                borderRadius: '100px',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <Menu size={18} />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Sliding Sidebar Drawer & Backdrop */}
+      {/* Mobile Sliding Glass Sidebar Drawer (Sliding from RIGHT) */}
       <AnimatePresence>
         {mobileSidebarOpen && (
-          <>
+          <div style={{ position: 'fixed', inset: 0, zIndex: 1000 }}>
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={() => setMobileSidebarOpen(false)}
               style={{
-                position: 'fixed',
+                position: 'absolute',
                 inset: 0,
-                background: 'rgba(0, 0, 0, 0.92)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                zIndex: 1000
+                background: 'rgba(0, 0, 0, 0.65)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)'
               }}
             />
 
-            {/* Sliding Solid Dark Obsidian Sidebar */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 350, damping: 32 }}
+            {/* Sliding Glass Sidebar Drawer from RIGHT */}
+            <motion.aside
+              initial={{ x: '100%', opacity: 0.85 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '100%', opacity: 0.85 }}
+              transition={{ type: 'spring', stiffness: 360, damping: 34 }}
               style={{
-                position: 'fixed',
-                top: 0,
+                position: 'absolute',
                 right: 0,
+                top: 0,
                 bottom: 0,
-                width: '300px',
+                width: '290px',
                 maxWidth: '85vw',
-                background: '#0a0a0f',
+                background: 'rgba(10, 10, 14, 0.88)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
                 borderLeft: '1px solid rgba(255, 255, 255, 0.15)',
-                zIndex: 1001,
-                padding: '1.75rem',
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '-15px 0 50px rgba(0, 0, 0, 0.98), 0 0 30px rgba(0, 255, 136, 0.08)'
+                boxShadow: '-15px 0 40px rgba(0, 0, 0, 0.8)'
               }}
             >
-              {/* Sidebar Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.25rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>
+              {/* Header */}
+              <div style={{
+                display: 'flex',
+                height: '68px',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                padding: '0 1.25rem'
+              }}>
                 <span style={{ fontWeight: 800, fontSize: '1.15rem', color: '#ffffff' }}>
                   Abdurrahman<span style={{ color: '#00ff88' }}>.Dev</span>
                 </span>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
-                  aria-label="Close Sidebar"
+                  aria-label="Close menu"
                   style={{
-                    background: '#16161e',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     color: '#ffffff',
                     borderRadius: '50%',
                     width: '36px',
@@ -184,27 +200,35 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                 </button>
               </div>
 
-              {/* Sidebar Links with Solid High-Contrast Dark Cards */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', flexGrow: 1 }}>
+              {/* Navigation Items List */}
+              <nav style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
                 <button
                   onClick={() => {
                     setMobileSidebarOpen(false)
                     onOpenAbout()
                   }}
                   style={{
-                    background: '#14141c',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '10px',
+                    background: 'transparent',
+                    border: '1px solid transparent',
+                    borderRadius: '12px',
                     color: '#ffffff',
                     textAlign: 'left',
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.9rem 1.1rem',
+                    padding: '0.75rem 1rem',
                     transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'transparent'
                   }}
                 >
                   <User size={18} style={{ color: '#00ff88' }} /> About & Bio
@@ -214,17 +238,26 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#projects" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
-                    background: '#14141c',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '10px',
+                    background: 'transparent',
+                    border: '1px solid transparent',
+                    borderRadius: '12px',
                     color: '#ffffff',
                     textDecoration: 'none',
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.9rem 1.1rem'
+                    padding: '0.75rem 1rem',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'transparent'
                   }}
                 >
                   <Layers size={18} style={{ color: '#38bdf8' }} /> Projects
@@ -234,17 +267,26 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="#experience" 
                   onClick={() => setMobileSidebarOpen(false)}
                   style={{
-                    background: '#14141c',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '10px',
+                    background: 'transparent',
+                    border: '1px solid transparent',
+                    borderRadius: '12px',
                     color: '#ffffff',
                     textDecoration: 'none',
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.9rem 1.1rem'
+                    padding: '0.75rem 1rem',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'transparent'
                   }}
                 >
                   <Briefcase size={18} style={{ color: '#61dafb' }} /> Career Timeline
@@ -256,31 +298,46 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                     onOpenContact()
                   }}
                   style={{
-                    background: '#14141c',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '10px',
+                    background: 'transparent',
+                    border: '1px solid transparent',
+                    borderRadius: '12px',
                     color: '#ffffff',
                     textAlign: 'left',
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    padding: '0.9rem 1.1rem'
+                    padding: '0.75rem 1rem',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'transparent'
                   }}
                 >
                   <Mail size={18} style={{ color: '#f472b6' }} /> Direct Contact
                 </button>
-              </div>
+              </nav>
 
-              {/* Footer Socials */}
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1.5rem', display: 'flex', gap: '1rem' }}>
+              {/* Footer Actions */}
+              <div style={{
+                padding: '1rem',
+                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                gap: '0.75rem'
+              }}>
                 <a 
                   href="https://github.com/abdul-raham" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', borderRadius: '8px', background: '#14141c', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '0.875rem', textDecoration: 'none', fontWeight: 500 }}
+                  className="btn btn-secondary"
+                  style={{ flex: 1, padding: '0.65rem', gap: '0.4rem', fontSize: '0.85rem' }}
                 >
                   <Github size={16} /> GitHub
                 </a>
@@ -288,13 +345,14 @@ export function Navbar({ onSelectProject, onOpenContact, onOpenAbout }: NavbarPr
                   href="https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', borderRadius: '8px', background: '#14141c', border: '1px solid rgba(255,255,255,0.12)', color: '#ffffff', fontSize: '0.875rem', textDecoration: 'none', fontWeight: 500 }}
+                  className="btn btn-secondary"
+                  style={{ flex: 1, padding: '0.65rem', gap: '0.4rem', fontSize: '0.85rem' }}
                 >
                   <Linkedin size={16} /> LinkedIn
                 </a>
               </div>
-            </motion.div>
-          </>
+            </motion.aside>
+          </div>
         )}
       </AnimatePresence>
     </header>
