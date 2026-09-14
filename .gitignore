@@ -25,3 +25,7 @@ dist-ssr
 
 .vercel
 .env*
+
+# Local design reference and visual check
+.reference-timeline/
+timeline-check.png

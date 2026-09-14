@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, Github, Lock, ArrowUpRight, Globe, Play, Layers, Activity, Cpu, ShoppingBag, Smartphone, GraduationCap, Globe2, Wrench } from 'lucide-react'
 import { PROJECTS, ProjectData } from '../data/projectsData'
 import { ReflectiveCard } from './ReflectiveCard'
-import { GithubLanguageBar } from './GithubLanguageBar'
 
 interface ProjectGridProps {
   onSelectProject: (project: ProjectData) => void
@@ -18,6 +17,7 @@ const CATEGORIES = [
   { name: 'Mobile', icon: Smartphone },
   { name: 'Education', icon: GraduationCap },
   { name: 'WordPress / CMS', icon: Globe2 },
+  { name: 'Websites', icon: Globe2 },
   { name: 'DevOps & Tooling', icon: Wrench }
 ]
 
@@ -184,7 +184,7 @@ export function ProjectGrid({ onSelectProject }: ProjectGridProps) {
 
                 {/* Badges Row: Live Domain + Google Play Store Badge */}
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-                  {project.displayDomain && (
+                  {project.displayDomain && project.demoUrl && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
@@ -242,9 +242,6 @@ export function ProjectGrid({ onSelectProject }: ProjectGridProps) {
                 }}>
                   {project.shortDescription}
                 </p>
-
-                {/* GitHub Language Bar Component */}
-                <GithubLanguageBar languages={project.languages} showLegend={false} height={6} />
 
                 {/* Tech Tags */}
                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>

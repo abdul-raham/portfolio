@@ -1,3 +1,5 @@
+import { ADDITIONAL_PROJECTS } from './additionalProjects'
+
 export interface ProjectLanguage {
   name: string
   percentage: number
@@ -10,7 +12,7 @@ export interface ProjectData {
   logoPath: string
   repoPath?: string
   displayDomain?: string
-  category: 'Healthcare' | 'AI & ML' | 'SaaS' | 'Mobile' | 'DevOps & Tooling' | 'Education' | 'Commerce' | 'WordPress / CMS'
+  category: 'Healthcare' | 'AI & ML' | 'SaaS' | 'Mobile' | 'DevOps & Tooling' | 'Education' | 'Commerce' | 'WordPress / CMS' | 'Websites'
   shortDescription: string
   fullDescription: string
   problemSolved: string
@@ -19,14 +21,15 @@ export interface ProjectData {
   isPlayStore?: boolean
   playStoreUrl?: string
   githubUrl?: string
-  demoUrl: string
+  demoUrl?: string
   techStack: string[]
   languages: ProjectLanguage[]
   stars?: number
-  updatedAt: string
+  updatedAt?: string
 }
 
 export const PROJECTS: ProjectData[] = [
+  ...ADDITIONAL_PROJECTS,
   {
     id: 'doctech-global',
     title: 'DocTech Global',

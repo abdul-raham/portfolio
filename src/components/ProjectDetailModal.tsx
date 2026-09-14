@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ExternalLink, Github, Lock, Cpu, CheckCircle2, Layers, Globe, Play } from 'lucide-react'
 import { ProjectData } from '../data/projectsData'
-import { GithubLanguageBar } from './GithubLanguageBar'
 
 interface ProjectDetailModalProps {
   project: ProjectData | null
@@ -96,7 +95,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
               {project.category}
             </span>
 
-            {project.displayDomain && (
+            {project.displayDomain && project.demoUrl && (
               <a
                 href={project.demoUrl}
                 target="_blank"
@@ -203,21 +202,6 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.975rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
             {project.fullDescription}
           </p>
-
-          {/* Animated GitHub Language Bar */}
-          <div style={{
-            background: 'rgba(0, 0, 0, 0.4)',
-            padding: '1rem 1.25rem',
-            borderRadius: '10px',
-            border: '1px solid var(--border-color)',
-            marginBottom: '1.75rem'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.825rem', fontWeight: 600, marginBottom: '6px', flexWrap: 'wrap', gap: '4px' }}>
-              <span>Repository Language Distribution</span>
-              <span style={{ color: 'var(--text-tertiary)' }}>{project.repoPath || project.displayDomain}</span>
-            </div>
-            <GithubLanguageBar languages={project.languages} showLegend={true} height={8} />
-          </div>
 
           {/* Problem & Solution */}
           <div style={{ marginBottom: '1.75rem' }}>
