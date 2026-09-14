@@ -99,23 +99,7 @@ function App() {
           <GithubContributions />
         </motion.section>
 
-        <motion.section 
-          id="experience" 
-          className="container" 
-          style={{ paddingBottom: '6rem' }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 className="section-title" style={{ marginBottom: '0.25rem' }}>Experience & Career Timeline</h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-              Scroll-assembling milestones representing client work, SaaS development, and private IP.
-            </p>
-          </div>
-          <ExperienceTimeline />
-        </motion.section>
+        <ExperienceTimeline />
       </main>
 
       <Footer />

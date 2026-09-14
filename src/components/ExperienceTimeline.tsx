@@ -1,214 +1,68 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Briefcase, Calendar, MapPin, ExternalLink, GraduationCap, Building2, Activity, ShoppingBag, Laptop, Smartphone } from 'lucide-react'
-import { ReflectiveCard } from './ReflectiveCard'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
+import './experienceTimeline.css'
 
-const EXPERIENCES = [
-  {
-    id: 'doctech-global',
-    role: 'Co-Founder & Lead Engineer',
-    company: 'DocTech Global',
-    location: 'Lagos, Nigeria (Remote / Hybrid)',
-    date: '2024 — Present',
-    description: 'Leading technical execution and system architecture. Transforming complex operational challenges into high-performance software systems with a focus on exceptional UX.',
-    technologies: ['System Architecture', 'React', 'TypeScript', 'Node.js', 'PostgreSQL', 'B2B Platforms'],
-    badge: 'Co-Founder & Lead Engineer',
-    icon: Building2,
-    iconColor: '#00ff88'
-  },
-  {
-    id: 'medaxis-founder',
-    role: 'Founder & CEO',
-    company: 'MedAxis',
-    location: 'Lagos, Nigeria',
-    date: '2024 — Present',
-    link: 'https://medaxis-nine.vercel.app',
-    description: 'Modernizing hospital operations in Nigeria through digital workflows, centralized patient encounters, HMO claims tracking, and revenue leak protection from day one.',
-    technologies: ['React', 'TypeScript', 'HealthTech OS', 'Medical Billing', 'EHR Protocols'],
-    badge: 'Founder & CEO',
-    icon: Activity,
-    iconColor: '#00ff88'
-  },
-  {
-    id: 'techcircle-founder',
-    role: 'Founder & CEO',
-    company: 'TechCircle',
-    location: 'Lagos, Nigeria',
-    date: '2023 — Present',
-    description: 'Building a technology commerce network connecting vendors and customers through digital storefronts, inventory visibility, and trusted communications.',
-    technologies: ['CommerceTech', 'TypeScript', 'Node.js', 'React', 'Multi-tenant Storefronts'],
-    badge: 'Founder & CEO',
-    icon: ShoppingBag,
-    iconColor: '#00ff88'
-  },
-  {
-    id: 'lasu-degree',
-    role: 'Electronics & Computer Engineering Student',
-    company: 'Lagos State University (LASU)',
-    location: 'Ojo, Lagos, Nigeria',
-    date: '2023 — Present',
-    description: 'Combining electronic engineering fundamentals (embedded hardware, microcontrollers, signal processing) with modern computer systems architecture.',
-    technologies: ['Computer Engineering', 'Hardware Systems', 'C/C++', 'Algorithms', 'Digital Logic'],
-    badge: 'Education',
-    isEducation: true,
-    icon: GraduationCap,
-    iconColor: '#61dafb'
-  },
-  {
-    id: 'b2b-architect',
-    role: 'Enterprise Systems Architect & Full-Stack Lead',
-    company: 'B2B & HealthTech Client Solutions',
-    location: 'Remote',
-    date: '2022 — 2024',
-    description: 'Designed and deployed custom enterprise portals, AI document extraction pipelines, and spatial routing engines for client platforms across West Africa.',
-    technologies: ['React', 'Next.js', 'Python', 'FastAPI', 'Docker', 'WebSockets'],
-    badge: 'Engineering Lead',
-    icon: Laptop,
-    iconColor: '#818cf8'
-  },
-  {
-    id: 'mobile-spatial-lead',
-    role: 'Systems & Mobile Application Developer',
-    company: 'Rahlah Logistics & OptiConnect',
-    location: 'Remote',
-    date: '2022 — 2023',
-    description: 'Built cross-platform logistics trackers and real-time webhook payload transformation proxies published on Google Play Store.',
-    technologies: ['React Native', 'TypeScript', 'C++', 'Expo', 'SQLite', 'Google Play API'],
-    badge: 'Mobile Systems',
-    icon: Smartphone,
-    iconColor: '#f472b6'
-  }
+const chapters = [
+  { year: '2022', label: 'The foundation', title: 'Building for the real world', description: 'Early client systems and mobile work taught me to turn operational problems into software people can actually use.', detail: 'Client platforms · Mobile systems', accent: '#8b9bff', mark: '01', preview: 'Systems before spectacle' },
+  { year: '2023', label: 'A new direction', title: 'TechCircle takes shape', description: 'I started building a technology commerce network around storefronts, inventory, and stronger connections between vendors and customers.', detail: 'Commerce · Founder', accent: '#ffad78', mark: 'TC', preview: 'Commerce, connected' },
+  { year: '2023', label: 'Engineering in depth', title: 'Electronics meets software', description: 'At Lagos State University, I began pairing electronics and computer engineering with the software systems I was already shipping.', detail: 'LASU · Electronics & Computer Engineering', accent: '#74c8ed', mark: 'E/C', preview: 'Hardware thinking. Software craft.' },
+  { year: '2024', label: 'Company building', title: 'DocTech Global', description: 'As co-founder and lead engineer, I began shaping product architecture and technical delivery for complex business workflows.', detail: 'Co-founder · Lead engineer', accent: '#66e5ab', mark: 'DT', preview: 'Ideas into infrastructure', href: 'https://doctechglobal.com.ng/' },
+  { year: '2024', label: 'Healthcare systems', title: 'MedAxis', description: 'I founded MedAxis to bring patient encounters, billing, HMO claims, and hospital operations into one coherent workflow.', detail: 'Founder · HealthTech', accent: '#8dcbff', mark: 'M+', preview: 'Care runs better together', href: 'https://medaxis-nine.vercel.app' },
+  { year: '2026', label: 'Still in motion', title: 'The next systems', description: 'Today my work spans healthcare, commerce, AI, and enterprise tools. The through-line is making ambitious systems feel clear and useful.', detail: 'Product engineering · Lagos', accent: '#d2b6ff', mark: '∞', preview: 'Keep building what matters' },
 ]
 
+const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n))
+const polar = (radius: number, degrees: number) => ({ x: 280 + Math.cos(degrees * Math.PI / 180) * radius, y: 280 + Math.sin(degrees * Math.PI / 180) * radius })
+
 export function ExperienceTimeline() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+  const last = chapters.length - 1
+  const syncScroll = useCallback(() => {
+    const section = sectionRef.current
+    if (!section) return
+    const travel = Math.max(section.offsetHeight - window.innerHeight, 1)
+    setActive(Math.round(clamp(-section.getBoundingClientRect().top / travel, 0, 1) * last))
+  }, [last])
+  useEffect(() => {
+    let frame = 0
+    const onScroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(syncScroll) }
+    syncScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll) }
+  }, [syncScroll])
+  const goTo = (index: number) => {
+    const section = sectionRef.current
+    if (!section) return
+    const target = clamp(index, 0, last)
+    const top = window.scrollY + section.getBoundingClientRect().top
+    const travel = section.offsetHeight - window.innerHeight
+    window.scrollTo({ top: top + target / last * travel, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+    setActive(target)
+  }
+  const current = chapters[active]
   return (
-    <div style={{ position: 'relative', paddingLeft: '2.75rem' }}>
-      {/* Scroll-Assembling Connector Line */}
-      <motion.div
-        initial={{ height: 0 }}
-        whileInView={{ height: '100%' }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          position: 'absolute',
-          top: '14px',
-          bottom: 0,
-          left: '13px',
-          width: '2px',
-          background: 'linear-gradient(to bottom, #00ff88, #818cf8, rgba(255,255,255,0.05))',
-          transformOrigin: 'top'
-        }}
-      />
-
-      {EXPERIENCES.map((exp, idx) => {
-        const IconComponent = exp.icon
-        return (
-          <motion.div 
-            key={exp.id}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, delay: idx * 0.12 }}
-            style={{ position: 'relative', marginBottom: '2.5rem' }}
-          >
-            {/* Assembling Node Circle with Custom Computer & Domain Icon */}
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.12 + 0.2 }}
-              style={{
-                position: 'absolute',
-                left: '-2.75rem',
-                top: '1.15rem',
-                transform: 'translateX(-50%)',
-                width: '28px',
-                height: '28px',
-                borderRadius: '50%',
-                background: 'var(--bg-primary)',
-                border: `2px solid ${exp.iconColor}`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: `0 0 14px ${exp.iconColor}40`,
-                zIndex: 3
-              }}
-            >
-              <IconComponent size={14} style={{ color: exp.iconColor }} />
-            </motion.div>
-
-            <ReflectiveCard style={{ padding: '1.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '0.75rem' }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      {exp.role}
-                    </h3>
-                    <span style={{
-                      fontSize: '0.7rem',
-                      fontWeight: 600,
-                      padding: '2px 8px',
-                      borderRadius: '100px',
-                      background: `${exp.iconColor}15`,
-                      color: exp.iconColor,
-                      border: `1px solid ${exp.iconColor}30`
-                    }}>
-                      {exp.badge}
-                    </span>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '4px', flexWrap: 'wrap' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-primary)', fontWeight: 500 }}>
-                      <Briefcase size={14} /> {exp.company}
-                    </span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <MapPin size={14} /> {exp.location}
-                    </span>
-                    {exp.link && (
-                      <a href={exp.link} target="_blank" rel="noopener noreferrer" style={{ color: '#00ff88', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                        medaxis-nine.vercel.app <ExternalLink size={12} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <span style={{
-                  fontSize: '0.8rem',
-                  color: 'var(--text-tertiary)',
-                  padding: '4px 10px',
-                  borderRadius: '100px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid var(--border-color)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}>
-                  <Calendar size={12} /> {exp.date}
-                </span>
-              </div>
-
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
-                {exp.description}
-              </p>
-
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                {exp.technologies.map(tech => (
-                  <span key={tech} style={{
-                    fontSize: '0.75rem',
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                    background: 'var(--bg-tertiary)',
-                    color: 'var(--text-secondary)',
-                    border: '1px solid var(--border-color)'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </ReflectiveCard>
-          </motion.div>
-        )
-      })}
-    </div>
+    <section id="experience" className="career-story" aria-label="Career journey">
+      <div className="career-intro container"><span className="career-kicker">A journey in systems</span><h2>Every chapter changed<br /><em>what I could build.</em></h2><p>Turn the dial or scroll through the moments behind the work.</p></div>
+      <div ref={sectionRef} className="career-scroll-space"><div className="career-stage">
+        <div className="career-dial-side">
+          <span className="career-side-label">The journey / 2022 — now</span>
+          <svg className="career-dial" viewBox="0 0 560 560" role="img" aria-label={`Career dial at ${current.year}: ${current.title}`}>
+            <circle className="career-dial-plate" cx="280" cy="280" r="252" /><circle className="career-dial-ring" cx="280" cy="280" r="186" />
+            {Array.from({ length: 72 }, (_, index) => { const angle = index * 5; const start = polar(177, angle); const end = polar(index % 6 === 0 ? 160 : 168, angle); return <line key={index} className={index % 6 === 0 ? 'career-tick major' : 'career-tick'} x1={start.x} y1={start.y} x2={end.x} y2={end.y} /> })}
+            {chapters.map((chapter, index) => { const angle = -90 + (index - active) * 39; const dot = polar(187, angle); const label = polar(224, angle); return <g key={index} className={`career-year ${index === active ? 'active' : ''}`} style={{ opacity: clamp(1 - Math.abs(index - active) * .18, .12, 1) }}><circle cx={dot.x} cy={dot.y} r={index === active ? 8 : 5} /><text x={label.x} y={label.y} textAnchor="middle" dominantBaseline="middle">{chapter.year}</text></g> })}
+            <path className="career-pointer" d="M270 17 L290 17 L280 37 Z" /><text className="career-center-year" x="280" y="276" textAnchor="middle">{current.year}</text><text className="career-center-label" x="280" y="315" textAnchor="middle">{current.label}</text>
+          </svg>
+          <div className="career-controls"><button type="button" onClick={() => goTo(active - 1)} disabled={active === 0} aria-label="Previous chapter"><ArrowLeft size={18} /></button><span>{String(active + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}</span><button type="button" onClick={() => goTo(active + 1)} disabled={active === last} aria-label="Next chapter"><ArrowRight size={18} /></button></div>
+        </div>
+        <div className="career-preview-side" style={{ '--chapter-accent': current.accent } as React.CSSProperties}>
+          <div className="career-preview-top"><span>SELECTED CHAPTER</span><span>ABDULRAHMAN BAKARE / ARCHIVE</span></div>
+          <div className="career-art" key={active}><div className="career-art-orbit orbit-one" /><div className="career-art-orbit orbit-two" /><span className="career-art-mark">{current.mark}</span><span className="career-art-caption">{current.preview}</span></div>
+          <article className="career-chapter" key={`chapter-${active}`} aria-live="polite"><span className="career-chapter-meta">{current.label} <span>·</span> {current.detail}</span><h3>{current.title}</h3><p>{current.description}</p>{current.href && <a href={current.href} target="_blank" rel="noopener noreferrer">Explore the work <ArrowUpRight size={16} /></a>}</article>
+          <div className="career-progress" aria-hidden="true"><span style={{ width: `${(active + 1) / chapters.length * 100}%` }} /></div>
+        </div>
+      </div></div>
+    </section>
   )
 }
