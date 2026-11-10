@@ -1,0 +1,17 @@
+// Cloudflare Workers settings. Vite builds the site into dist/; the small Worker in worker/
+// answers /api/github-contributions and hands everything else to the static files.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "build": {
+    "command": "npm install --no-audit --no-fund && npm run build"
+  },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  }
+}
