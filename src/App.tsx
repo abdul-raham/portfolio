@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { projects, type Project } from './site'
 import { startSmoothScroll } from './smooth'
-import { Contact, Hero, Index, Intro, ProjectPanel, Search, Stack, TopBar, Ventures, Work } from './components/site/Site'
+import { Contact, Hero, Index, Intro, Products, ProjectPanel, Search, Stack, TopBar, Ventures, Work } from './components/site/Site'
 import { Journey } from './components/site/Journey'
 
 // Project details open over the page at #/project/<id>, the address the previous site used too.
@@ -43,6 +43,7 @@ export default function App() {
         <Hero />
         <Intro />
         <Ventures />
+        <Products onOpen={show} />
         <Work onOpen={show} />
         <Index onOpen={show} />
         <Journey />

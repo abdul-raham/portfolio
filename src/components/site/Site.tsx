@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, animate, motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { featuredProjects, otherProjects, profile, projects, skills, stats, ventures, type Project } from '../../site'
+import { featuredProjects, otherProjects, productProjects, profile, projects, skills, stats, ventures, type Project } from '../../site'
 import { scrollToTarget, stopScroll } from '../../smooth'
 import { Activity } from './Journey'
 
@@ -64,8 +64,9 @@ export function TopBar({ onSearch }: { onSearch: () => void }) {
   }, [])
 
   const links = [
+    ['Companies', '#ventures'],
+    ['Products', '#products'],
     ['Work', '#work'],
-    ['Ventures', '#ventures'],
     ['Journey', '#experience'],
     ['Contact', '#contact'],
   ]
@@ -132,8 +133,8 @@ export function Hero() {
         </h1>
         <motion.div className="hero-foot" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.1 }}>
           <p>
-            Co-founder of <strong>DocTech Global</strong> and <strong>EtelectLabs</strong>. Founder of <strong>MedAxis</strong> and{' '}
-            <strong>TechCircle</strong>.
+            Co-founder and Co-CEO of <strong>DocTech Global</strong> and <strong>EtelectLabs</strong>. Builder of{' '}
+            <strong>MedAxis</strong>, <strong>TechCircle</strong> and the products below.
           </p>
           <div className="hero-actions">
             <a
@@ -213,37 +214,71 @@ export function Ventures() {
   return (
     <section id="ventures" className="ventures">
       <div className="section-head">
-        <p className="eyebrow">Ventures</p>
+        <p className="eyebrow">Companies</p>
         <h2>
-          <Rise inView>Companies I&rsquo;m building.</Rise>
+          <Rise inView>Two companies, one way of building.</Rise>
         </h2>
       </div>
       <div className="ventures-grid">
-        {ventures.map((v, i) => {
-          const body = (
-            <>
+        {ventures.map((v, i) => (
+          <Reveal key={v.name} delay={i * 0.08} className="venture-cell">
+            <article className="venture">
               <div className="venture-top">
-                <img src={v.logo} alt="" width={44} height={44} />
+                <img src={v.logo} alt="" width={64} height={64} />
                 <span>Since {v.since}</span>
               </div>
               <h3>{v.name}</h3>
               <p className="venture-role">{v.role}</p>
               <p className="venture-text">{v.text}</p>
-              {v.href && <span className="venture-link">Visit {v.href.replace(/^https?:\/\//, '')}</span>}
-            </>
-          )
-          return (
-            <Reveal key={v.name} delay={i * 0.06} className="venture-cell">
-              {v.href ? (
-                <a className="venture" href={v.href} target="_blank" rel="noreferrer">
-                  {body}
+              <div className="venture-links">
+                <a className="link" href={v.href} target="_blank" rel="noreferrer">
+                  {v.href.replace(/^https?:\/\//, '')}
                 </a>
+                <a className="link" href={`mailto:${v.email}`}>
+                  {v.email}
+                </a>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/* Products -------------------------------------------------------------- */
+
+export function Products({ onOpen }: { onOpen: (p: Project) => void }) {
+  return (
+    <section id="products" className="products">
+      <div className="section-head">
+        <p className="eyebrow">Products</p>
+        <h2>
+          <Rise inView>Products I&rsquo;ve built.</Rise>
+        </h2>
+      </div>
+      <div className="products-grid">
+        {productProjects.map((p, i) => (
+          <Reveal key={p.id} delay={i * 0.08} className="product-cell">
+            <button type="button" className="product" onClick={() => onOpen(p)}>
+              {p.image ? (
+                <Browser project={p} />
               ) : (
-                <div className="venture">{body}</div>
+                <div className="product-mark">
+                  <img src={p.logoPath} alt="" width={160} height={160} />
+                </div>
               )}
-            </Reveal>
-          )
-        })}
+              <div className="product-text">
+                <div>
+                  <h3>{p.title}</h3>
+                  <p className="work-kind">{p.kind ?? p.category}</p>
+                </div>
+                <p className="work-summary">{p.summary}</p>
+                <span className="link">{p.liveUrl ? `Visit ${p.domain}` : 'Project details'}</span>
+              </div>
+            </button>
+          </Reveal>
+        ))}
       </div>
     </section>
   )
@@ -302,9 +337,9 @@ export function Work({ onOpen }: { onOpen: (p: Project) => void }) {
   return (
     <section id="work" className="work">
       <div className="section-head">
-        <p className="eyebrow">Selected work</p>
+        <p className="eyebrow">Client and partner work</p>
         <h2>
-          <Rise inView>Live products, built and shipped.</Rise>
+          <Rise inView>Built for the people who run on it.</Rise>
         </h2>
         <p className="section-sub">Every screenshot here is the real site, captured from its live address.</p>
       </div>
@@ -399,6 +434,14 @@ export function Contact() {
       <a className="contact-mail" href={`mailto:${profile.email}`}>
         {profile.email}
       </a>
+      <div className="contact-companies">
+        {ventures.map((v) => (
+          <p key={v.name}>
+            <span>{v.name}</span>
+            <a href={`mailto:${v.email}`}>{v.email}</a>
+          </p>
+        ))}
+      </div>
       <div className="contact-links">
         <a href={profile.linkedin} target="_blank" rel="noreferrer">
           LinkedIn
@@ -406,9 +449,11 @@ export function Contact() {
         <a href={profile.github} target="_blank" rel="noreferrer">
           GitHub
         </a>
-        <a href="https://doctechglobal.com.ng" target="_blank" rel="noreferrer">
-          DocTech Global
-        </a>
+        {ventures.map((v) => (
+          <a key={v.name} href={v.href} target="_blank" rel="noreferrer">
+            {v.name}
+          </a>
+        ))}
       </div>
       <div className="contact-base">
         <span>

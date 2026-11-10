@@ -7,9 +7,9 @@ export const profile = {
   short: 'Abdulrahman Bakare',
   first: 'Abdulrahman',
   last: 'Bakare',
-  role: 'Founder and software engineer',
+  role: 'Co-founder, Co-CEO and software engineer',
   location: 'Lagos, Nigeria',
-  email: 'Doctechglobalz@gmail.com',
+  email: 'abdulrahmanbakare001@gmail.com',
   site: 'https://abdulrahmanbakare.com.ng',
   github: 'https://github.com/abdul-raham',
   linkedin: 'https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/',
@@ -18,42 +18,30 @@ export const profile = {
     'I build the software businesses run on: hospital systems, school platforms, commerce, logistics and the websites that bring customers in. Engineer by training, product designer by instinct, founder by choice.',
 }
 
+// The two companies. MedAxis and TechCircle are products, listed with the rest of the work.
 export const ventures = [
   {
     name: 'DocTech Global',
-    role: 'Co-Founder and Lead Engineer',
+    role: 'Co-founder and Co-CEO',
     since: '2024',
-    text: 'A design and engineering studio building websites, web applications and business software.',
+    text: 'A design and engineering studio that builds websites, web applications and business software for organisations.',
     href: 'https://doctechglobal.com.ng',
+    email: 'info@doctechglobal.com.ng',
     logo: '/logos/doctech.svg',
   },
   {
     name: 'EtelectLabs',
-    role: 'Co-founder, Product and Engineering',
+    role: 'Co-founder and Co-CEO',
     since: '2024',
-    text: 'A product lab bringing engineering, product thinking and brand strategy together. Home of MedAxis.',
-    // Its site is moving to Cloudflare; add the new address here once it is live.
-    href: undefined as string | undefined,
+    text: 'A product lab that brings engineering, product thinking and brand strategy together to build its own products, including MedAxis.',
+    href: 'https://etelectlabs.org',
+    email: 'info@etelectlabs.org',
     logo: '/logos/etelectlabs.png',
   },
-  {
-    name: 'MedAxis',
-    role: 'Founder and CEO',
-    since: '2024',
-    text: 'Patient records, appointments, lab results, pharmacy and billing for hospitals, in one place.',
-    href: 'https://medaxis.com.ng',
-    logo: '/logos/medaxis.svg',
-  },
-  {
-    name: 'TechCircle',
-    role: 'Founder and CEO',
-    since: '2023',
-    text: 'A technology commerce network connecting vendors and customers through digital storefronts.',
-    // techcircle.com.ng is offline (paused hosting). Put the link back once it is live again.
-    href: undefined as string | undefined,
-    logo: '/logos/techcircle.svg',
-  },
 ]
+
+// Products he built, shown first in the work. TechCircle's site is offline (paused hosting), so it has no link.
+export const products = ['medaxis', 'techcircle']
 
 // Live sites with a real screenshot, shown large on the home page. Descriptions match what each live site
 // actually shows (checked 10 Nov 2026).
@@ -69,15 +57,6 @@ type Featured = {
 }
 
 export const featured: Featured[] = [
-  {
-    id: 'doctech-global',
-    image: '/work/doctech-global.webp',
-    kind: 'Studio website',
-    summary: 'The DocTech Global site: an interactive globe, a project showcase and a guided enquiry flow, built with Next.js.',
-    url: 'https://doctechglobal.com.ng/',
-    domain: 'doctechglobal.com.ng',
-    tech: ['Next.js', 'TypeScript', 'Three.js'],
-  },
   {
     id: 'medaxis',
     image: '/work/medaxis.webp',
@@ -154,7 +133,12 @@ const featuredIds = new Set(featured.map((f) => f.id))
 export type Project = ProjectData & { image?: string; kind?: string; summary: string; liveUrl?: string; domain?: string }
 
 // One list for the whole site: featured details win over the older data where both exist.
-export const projects: Project[] = PROJECTS.map((p) => {
+// DocTech Global is a company, shown under Companies, not a product.
+const companySites = new Set(['doctech-global'])
+const logoFixes: Record<string, string> = { techcircle: '/logos/techcircle.png' }
+
+export const projects: Project[] = PROJECTS.filter((p) => !companySites.has(p.id)).map((raw) => {
+  const p = { ...raw, logoPath: logoFixes[raw.id] ?? raw.logoPath }
   const f = featured.find((x) => x.id === p.id)
   const live = offline.has(p.id) ? undefined : p.demoUrl
   if (!f) return { ...p, summary: p.shortDescription, liveUrl: live, domain: live ? p.displayDomain : undefined }
@@ -171,12 +155,14 @@ export const projects: Project[] = PROJECTS.map((p) => {
   }
 })
 
-export const featuredProjects = featured.map((f) => projects.find((p) => p.id === f.id)!).filter(Boolean)
-export const otherProjects = projects.filter((p) => !featuredIds.has(p.id))
+const productIds = new Set(products)
+export const productProjects = products.map((id) => projects.find((p) => p.id === id)!).filter(Boolean)
+export const featuredProjects = featured.filter((f) => !productIds.has(f.id)).map((f) => projects.find((p) => p.id === f.id)!).filter(Boolean)
+export const otherProjects = projects.filter((p) => !featuredIds.has(p.id) && !productIds.has(p.id))
 
 export const stats = [
   { value: projects.length, suffix: '', label: 'Projects shipped' },
-  { value: ventures.length, suffix: '', label: 'Companies founded or co-founded' },
+  { value: ventures.length, suffix: '', label: 'Companies co-founded' },
   { value: new Date().getFullYear() - 2022, suffix: '+', label: 'Years building' },
 ]
 

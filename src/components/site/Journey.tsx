@@ -6,10 +6,10 @@ import { profile } from '../../site'
 // and a rail fills in as you go. Replaces the old dial.
 const chapters = [
   { year: '2022', title: 'Rahlah and OptiConnect', role: 'Systems and mobile developer', place: 'Remote', text: 'First products in production: mobile and web systems for travel services and connected business tools.', accent: '#8b9bff' },
-  { year: '2023', title: 'TechCircle', role: 'Founder and CEO', place: 'Lagos', text: 'Started a technology commerce network connecting vendors and customers through digital storefronts.', accent: '#ffad78' },
+  { year: '2023', title: 'TechCircle', role: 'Product', place: 'Lagos', text: 'Built a technology commerce network connecting vendors and customers through digital storefronts.', accent: '#ffad78' },
   { year: '2023', title: 'Lagos State University', role: 'Electronics and Computer Engineering', place: 'Ojo, Lagos', text: 'Engineering fundamentals alongside algorithms, software architecture and computer systems.', accent: '#74c8ed' },
-  { year: '2024', title: 'DocTech Global', role: 'Co-Founder and Lead Engineer', place: 'Lagos and remote', text: 'Leading the technical side of a studio that designs and builds websites, web applications and business software.', accent: '#66e5ab', href: 'https://doctechglobal.com.ng' },
-  { year: '2024', title: 'MedAxis and EtelectLabs', role: 'Founder, and co-founder', place: 'Lagos', text: 'Hospital software from reception to billing, built inside EtelectLabs, a product lab for software worth using.', accent: '#8dcbff', href: 'https://medaxis.com.ng' },
+  { year: '2024', title: 'DocTech Global', role: 'Co-founder and Co-CEO', place: 'Lagos and remote', text: 'Co-founded a studio that designs and builds websites, web applications and business software.', accent: '#66e5ab', href: 'https://doctechglobal.com.ng' },
+  { year: '2024', title: 'EtelectLabs', role: 'Co-founder and Co-CEO', place: 'Lagos', text: 'Co-founded a product lab for software worth using. Its first product is MedAxis, hospital software from reception to billing.', accent: '#8dcbff', href: 'https://etelectlabs.org' },
   { year: 'Now', title: 'Client systems', role: 'Systems architect and full-stack lead', place: 'Remote', text: 'School platforms, commerce, logistics and AI document tools for clients across West Africa.', accent: '#d2b6ff' },
 ]
 
@@ -90,106 +90,107 @@ export function Journey() {
   )
 }
 
-/* GitHub activity ----------------------------------------------------------- */
+/* Build activity ------------------------------------------------------------ */
 
-type Day = { date: string; level: number }
+// Real commits, counted per day from his git repositories, public and private (public/activity.json,
+// regenerated with scripts/activity.cjs). Stored with the site so it always loads.
+type Activity = { generated: string; total: number; repos: number; days: Record<string, number> }
 const shades = ['#16191e', '#1d4a36', '#2f7d58', '#5bc28c', '#a6f3cb']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const level = (n: number) => (n === 0 ? 0 : n <= 2 ? 1 : n <= 6 ? 2 : n <= 14 ? 3 : 4)
+const iso = (d: Date) => d.toISOString().slice(0, 10)
 
 export function Activity() {
-  const [days, setDays] = useState<Day[] | null>(null)
-  const [total, setTotal] = useState<number | null>(null)
+  const [data, setData] = useState<Activity | null>(null)
   const [failed, setFailed] = useState(false)
-  const [hover, setHover] = useState<Day | null>(null)
+  const [hover, setHover] = useState<{ date: string; n: number } | null>(null)
 
   useEffect(() => {
-    const controller = new AbortController()
-    fetch('/api/github-contributions', { signal: controller.signal })
+    fetch('/activity.json')
       .then((r) => {
-        if (!r.ok) throw new Error('unavailable')
+        if (!r.ok) throw new Error('missing')
         return r.json()
       })
-      .then((data: { days: Day[]; total?: number }) => {
-        if (!Array.isArray(data.days) || data.days.length < 300) throw new Error('bad data')
-        setDays(data.days)
-        setTotal(typeof data.total === 'number' ? data.total : null)
-      })
-      .catch((e) => e.name !== 'AbortError' && setFailed(true))
-    return () => controller.abort()
+      .then(setData)
+      .catch(() => setFailed(true))
   }, [])
 
-  // GitHub lists the calendar row by row (all Sundays, then all Mondays...). Sort by date, then lay the
-  // days into week columns starting on Sunday, so the grid matches GitHub's own.
+  // The last 53 weeks, ending on the day the data was generated, in Sunday-first week columns.
   const weeks = useMemo(() => {
-    if (!days) return []
-    const sorted = [...days].sort((a, b) => a.date.localeCompare(b.date))
-    const cols: (Day | null)[][] = []
-    let col: (Day | null)[] = Array(new Date(sorted[0].date + 'T00:00:00Z').getUTCDay()).fill(null)
-    sorted.forEach((d) => {
-      col.push(d)
-      if (col.length === 7) {
-        cols.push(col)
-        col = []
-      }
-    })
-    if (col.length) cols.push(col)
+    if (!data) return []
+    const end = new Date(data.generated + 'T00:00:00Z')
+    const start = new Date(end)
+    start.setUTCDate(start.getUTCDate() - 7 * 52 - end.getUTCDay())
+    const cols: { date: string; n: number }[][] = []
+    for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
+      if (d.getUTCDay() === 0) cols.push([])
+      const key = iso(d)
+      cols[cols.length - 1].push({ date: key, n: data.days[key] ?? 0 })
+    }
     return cols
-  }, [days])
+  }, [data])
 
-  const activeDays = days ? days.filter((d) => d.level > 0).length : 0
+  const yearDays = weeks.flat()
+  const yearTotal = yearDays.reduce((a, d) => a + d.n, 0)
+  const activeDays = yearDays.filter((d) => d.n > 0).length
+  const best = yearDays.reduce((a, d) => (d.n > a.n ? d : a), { date: '', n: 0 })
 
   return (
     <div className="activity-card">
       <div className="activity-head">
         <div>
-          <h3>GitHub activity</h3>
-          <p>
-            {days
-              ? total !== null
-                ? `${total.toLocaleString()} contributions across ${activeDays} active days in the last year.`
-                : `${activeDays} active days in the last year.`
-              : failed
-                ? 'Live activity is unavailable right now.'
-                : 'Loading live activity from GitHub.'}
-          </p>
+          <h3>Build activity</h3>
+          <p>{data ? 'Commits across my repositories, public and private, over the last year.' : failed ? 'Activity is unavailable right now.' : 'Loading activity.'}</p>
         </div>
         <a className="link" href={profile.github} target="_blank" rel="noreferrer">
           github.com/abdul-raham
         </a>
       </div>
-      {weeks.length > 0 && (
+      {data && (
         <>
+          <div className="activity-stats">
+            <div>
+              <strong>{yearTotal.toLocaleString()}</strong>
+              <span>commits</span>
+            </div>
+            <div>
+              <strong>{activeDays}</strong>
+              <span>days with commits</span>
+            </div>
+            <div>
+              <strong>{data.repos}</strong>
+              <span>repositories</span>
+            </div>
+            <div>
+              <strong>{best.n}</strong>
+              <span>commits on the busiest day</span>
+            </div>
+          </div>
           <div className="heat-scroll">
             <div className="heat">
               <div className="heat-months" aria-hidden="true">
                 {weeks.map((w, i) => {
-                  const first = w.find(Boolean)
-                  const prev = weeks[i - 1]?.find(Boolean)
-                  const m = first ? new Date(first.date + 'T00:00:00Z').getUTCMonth() : -1
-                  const pm = prev ? new Date(prev.date + 'T00:00:00Z').getUTCMonth() : -2
-                  return <span key={i}>{m !== pm && m >= 0 ? months[m] : ''}</span>
+                  const m = new Date(w[0].date + 'T00:00:00Z').getUTCMonth()
+                  const pm = i ? new Date(weeks[i - 1][0].date + 'T00:00:00Z').getUTCMonth() : -1
+                  return <span key={i}>{m !== pm ? months[m] : ''}</span>
                 })}
               </div>
-              <div className="heat-grid" role="img" aria-label={`GitHub contribution calendar, ${activeDays} active days in the last year`}>
+              <div className="heat-grid" role="img" aria-label={`${yearTotal} commits on ${activeDays} days in the last year`}>
                 {weeks.map((w, i) => (
                   <div key={i} className="heat-col">
-                    {w.map((d, j) =>
-                      d ? (
-                        <motion.span
-                          key={d.date}
-                          className="heat-cell"
-                          style={{ background: shades[d.level] ?? shades[0] }}
-                          initial={{ opacity: 0, scale: 0.4 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.35, delay: i * 0.008 }}
-                          onPointerEnter={() => setHover(d)}
-                          onPointerLeave={() => setHover(null)}
-                        />
-                      ) : (
-                        <span key={`e${j}`} className="heat-cell is-empty" />
-                      ),
-                    )}
+                    {w.map((d) => (
+                      <motion.span
+                        key={d.date}
+                        className="heat-cell"
+                        style={{ background: shades[level(d.n)] }}
+                        initial={{ opacity: 0, scale: 0.4 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.35, delay: i * 0.008 }}
+                        onPointerEnter={() => setHover(d)}
+                        onPointerLeave={() => setHover(null)}
+                      />
+                    ))}
                   </div>
                 ))}
               </div>
@@ -198,13 +199,13 @@ export function Activity() {
           <div className="heat-foot">
             <span>
               {hover
-                ? `${new Date(hover.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })}: ${['No', 'Some', 'Steady', 'High', 'Very high'][hover.level]} activity`
+                ? `${new Date(hover.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })}: ${hover.n} ${hover.n === 1 ? 'commit' : 'commits'}`
                 : 'Point at a day for details'}
             </span>
             <span className="heat-legend">
               Less
-              {shades.map((s) => (
-                <i key={s} style={{ background: s }} />
+              {shades.map((c) => (
+                <i key={c} style={{ background: c }} />
               ))}
               More
             </span>
