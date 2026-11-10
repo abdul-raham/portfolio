@@ -126,7 +126,7 @@ export const featured: Featured[] = [
 ]
 
 // These live sites are offline right now (paused hosting or no DNS), so they are listed without a link.
-export const offline = new Set(['techcircle', 'optismart', 'moraladsemporium', 'bigschool-plus', 'opticonnect', 'hogarf'])
+export const offline = new Set(['techcircle', 'moraladsemporium', 'bigschool-plus', 'opticonnect', 'hogarf'])
 
 const featuredIds = new Set(featured.map((f) => f.id))
 
@@ -136,9 +136,13 @@ export type Project = ProjectData & { image?: string; kind?: string; summary: st
 // DocTech Global is a company, shown under Companies, not a product.
 const companySites = new Set(['doctech-global'])
 const logoFixes: Record<string, string> = { techcircle: '/logos/techcircle.png' }
+// The OptiSmart portal now runs on its own domain (the old vercel.app copy is paused).
+const linkFixes: Record<string, { demoUrl: string; displayDomain: string }> = {
+  optismart: { demoUrl: 'https://sales.optismart.com.ng', displayDomain: 'sales.optismart.com.ng' },
+}
 
 export const projects: Project[] = PROJECTS.filter((p) => !companySites.has(p.id)).map((raw) => {
-  const p = { ...raw, logoPath: logoFixes[raw.id] ?? raw.logoPath }
+  const p = { ...raw, logoPath: logoFixes[raw.id] ?? raw.logoPath, ...linkFixes[raw.id] }
   const f = featured.find((x) => x.id === p.id)
   const live = offline.has(p.id) ? undefined : p.demoUrl
   if (!f) return { ...p, summary: p.shortDescription, liveUrl: live, domain: live ? p.displayDomain : undefined }
