@@ -9,7 +9,9 @@ export default async function handler(_request, response) {
       .map((match) => ({ date: match[1], level: Number(match[2]) }))
     if (days.length < 300) throw new Error('GitHub calendar format changed')
     response.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
-    response.status(200).json({ source: SOURCE, days })
+    const totalMatch = html.match(/([\d,]+)\s+contributions?\s+in the last year/)
+    const total = totalMatch ? Number(totalMatch[1].replace(/,/g, '')) : null
+    response.status(200).json({ source: SOURCE, days, total })
   } catch (_error) {
     response.status(503).json({ error: 'Live GitHub activity is temporarily unavailable' })
   }

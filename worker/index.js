@@ -16,8 +16,10 @@ async function contributions(ctx) {
       (match) => ({ date: match[1], level: Number(match[2]) }),
     );
     if (days.length < 300) throw new Error('GitHub calendar format changed');
+    const totalMatch = html.match(/([\d,]+)\s+contributions?\s+in the last year/);
+    const total = totalMatch ? Number(totalMatch[1].replace(/,/g, '')) : null;
     const response = Response.json(
-      { source: SOURCE, days },
+      { source: SOURCE, days, total },
       { headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' } },
     );
     ctx.waitUntil(cache.put(key, response.clone()));

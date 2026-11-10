@@ -2,7 +2,7 @@
 // answers /api/github-contributions and hands everything else to the static files.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "portfolio",
+  "name": "abdulrahman",
   "main": "worker/index.js",
   "compatibility_date": "2026-11-01",
   "build": {

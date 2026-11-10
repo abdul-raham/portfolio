@@ -30,3 +30,6 @@ dist-ssr
 .reference-timeline/
 timeline-check.png
 medaxis-preview-check.png
+
+# Cloudflare local preview files
+.wrangler
