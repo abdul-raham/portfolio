@@ -40,7 +40,7 @@ export const ventures = [
   },
 ]
 
-// Products he built, shown first in the work. TechCircle's site is offline (paused hosting), so it has no link.
+// Products he built, shown first in the work.
 export const products = ['medaxis', 'techcircle']
 
 // Live sites with a real screenshot, shown large on the home page. Descriptions match what each live site
@@ -64,6 +64,14 @@ export const featured: Featured[] = [
     summary: 'Hospital operations from reception to follow-up: appointments, patient folders, consultations, lab results, pharmacy and billing with HMO claims.',
     url: 'https://medaxis.com.ng',
     domain: 'medaxis.com.ng',
+  },
+  {
+    id: 'techcircle',
+    image: '/work/techcircle.webp',
+    kind: 'Tech marketplace',
+    summary: 'Genuine gadgets from trusted tech stores across Nigeria in one place: search, chat with the store, inspect in person, then pay online or pick up.',
+    url: 'https://techcircle.com.ng',
+    domain: 'techcircle.com.ng',
   },
   {
     id: 'kvc-platform',
@@ -126,7 +134,7 @@ export const featured: Featured[] = [
 ]
 
 // These live sites are offline right now (paused hosting or no DNS), so they are listed without a link.
-export const offline = new Set(['techcircle', 'moraladsemporium', 'bigschool-plus', 'opticonnect', 'hogarf'])
+export const offline = new Set(['moraladsemporium', 'bigschool-plus', 'opticonnect', 'hogarf'])
 
 const featuredIds = new Set(featured.map((f) => f.id))
 
