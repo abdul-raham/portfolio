@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { AnimatePresence, animate, motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { featuredProjects, otherProjects, productProjects, profile, projects, skills, stats, ventures, type Project } from '../../site'
 import { scrollToTarget, stopScroll } from '../../smooth'
@@ -124,18 +124,21 @@ export function Hero() {
       </motion.figure>
       <div className="hero-shade" />
       <div className="hero-content">
-        <motion.p className="hero-tag" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.9 }}>
-          <span className="dot" /> {profile.role}, {profile.location}
-        </motion.p>
         <h1>
           <Rise delay={0.15}>{profile.first}</Rise>
           <Rise delay={0.25}>{profile.last}</Rise>
         </h1>
         <motion.div className="hero-foot" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.1 }}>
+          <div className="hero-text">
+          <p className="hero-tag">
+            <span>{profile.role}</span>
+            <span>{profile.location}</span>
+          </p>
           <p>
             Co-founder and Co-CEO of <strong>DocTech Global</strong> and <strong>EtelectLabs</strong>. Builder of{' '}
             <strong>MedAxis</strong>, <strong>TechCircle</strong> and the products below.
           </p>
+          </div>
           <div className="hero-actions">
             <a
               className="btn btn-solid"
@@ -286,18 +289,26 @@ export function Products({ onOpen }: { onOpen: (p: Project) => void }) {
 
 /* Selected work ------------------------------------------------------------ */
 
+// The live site on a stage in its own brand colour: the desktop window, with the phone view over one corner.
 function Browser({ project }: { project: Project }) {
   return (
-    <div className="browser">
-      <div className="browser-bar">
-        <span className="browser-dots">
-          <i />
-          <i />
-          <i />
-        </span>
-        <span className="browser-url">{project.domain}</span>
+    <div className={project.phone ? 'stage has-phone' : 'stage'} style={{ '--tone': project.tone ?? '#2a78ff' } as CSSProperties}>
+      <div className="browser">
+        <div className="browser-bar">
+          <span className="browser-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="browser-url">{project.domain}</span>
+        </div>
+        <img src={project.image} width={1600} height={1000} alt={`Screenshot of ${project.title}, ${project.domain}`} loading="lazy" />
       </div>
-      <img src={project.image} width={1440} height={900} alt={`Screenshot of ${project.title}, ${project.domain}`} loading="lazy" />
+      {project.phone && (
+        <div className="phone" aria-hidden="true">
+          <img src={project.phone} width={560} height={1212} alt="" loading="lazy" />
+        </div>
+      )}
     </div>
   )
 }

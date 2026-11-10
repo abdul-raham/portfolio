@@ -10,7 +10,7 @@ const chapters = [
   { year: '2024', label: 'Healthcare systems', title: 'MedAxis', role: 'Founder & CEO', location: 'Lagos, Nigeria', description: 'Modernizing hospital operations through patient encounters, HMO claims tracking, digital billing, and revenue protection.', detail: '2024 — Present', tech: ['HealthTech', 'React', 'TypeScript', 'Medical Billing'], accent: '#8dcbff', mark: 'M+', preview: 'Care runs better together', href: 'https://medaxis-nine.vercel.app' },
   { year: '2026', label: 'Enterprise systems', title: 'Client solutions', role: 'Enterprise Systems Architect & Full-Stack Lead', location: 'Remote', description: 'Designing and delivering enterprise portals, AI document extraction, and operational tools for clients across West Africa.', detail: '2022 — Present', tech: ['Next.js', 'Python', 'FastAPI', 'Docker'], accent: '#d2b6ff', mark: '∞', preview: 'Keep building what matters' },
 ]
-const chapterVisuals = ['', '/techcircle-timeline.png', '', '/logos/doctech.svg', '/logos/medaxis.svg', '']
+const chapterVisuals = ['', '/techcircle-timeline.png', '', '/logos/doctech.webp', '/logos/medaxis.svg', '']
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n))
 const polar = (radius: number, degrees: number) => ({ x: 280 + Math.cos(degrees * Math.PI / 180) * radius, y: 280 + Math.sin(degrees * Math.PI / 180) * radius })

@@ -27,7 +27,7 @@ export const ventures = [
     text: 'A design and engineering studio that builds websites, web applications and business software for organisations.',
     href: 'https://doctechglobal.com.ng',
     email: 'info@doctechglobal.com.ng',
-    logo: '/logos/doctech.svg',
+    logo: '/logos/doctech.webp',
   },
   {
     name: 'EtelectLabs',
@@ -43,128 +43,39 @@ export const ventures = [
 // Products he built, shown first in the work.
 export const products = ['medaxis', 'techcircle']
 
-// Live sites with a real screenshot, shown large on the home page. Descriptions match what each live site
-// actually shows (checked 10 Nov 2026).
-type Featured = {
-  id: string
-  image: string
-  kind: string
-  summary: string
-  url: string
-  domain: string
-  tech?: string[]
-  name?: string
-}
+// Live sites shown large on the home page, each on a stage in its own brand colour with desktop and phone
+// screenshots (public/work/<id>.webp and <id>-m.webp, captured 10 Nov 2026). Text comes from data/projectsData.ts.
+type Featured = { id: string; kind: string; tone: string }
 
 export const featured: Featured[] = [
-  {
-    id: 'medaxis',
-    image: '/work/medaxis.webp',
-    kind: 'Hospital software',
-    summary: 'Hospital operations from reception to follow-up: appointments, patient folders, consultations, lab results, pharmacy and billing with HMO claims.',
-    url: 'https://medaxis.com.ng',
-    domain: 'medaxis.com.ng',
-  },
-  {
-    id: 'techcircle',
-    image: '/work/techcircle.webp',
-    kind: 'Tech marketplace',
-    summary: 'Genuine gadgets from trusted tech stores across Nigeria in one place: search, chat with the store, inspect in person, then pay online or pick up.',
-    url: 'https://techcircle.com.ng',
-    domain: 'techcircle.com.ng',
-  },
-  {
-    id: 'kvc-platform',
-    image: '/work/kvc-platform.webp',
-    kind: 'Education platform',
-    summary: 'Online tutoring for children that connects families with tutors, tracks every session and keeps parents informed.',
-    url: 'https://learnwithkvc.com',
-    domain: 'learnwithkvc.com',
-  },
-  {
-    id: 'ilmforge',
-    image: '/work/ilmforge.webp',
-    kind: 'Learning platform',
-    summary: 'Structured, self-paced Islamic courses with audio and text lessons, progress tracking and certificates.',
-    url: 'https://ilmforge.vercel.app/',
-    domain: 'ilmforge.vercel.app',
-  },
-  {
-    id: 'rahlah',
-    image: '/work/rahlah.webp',
-    kind: 'Booking platform and app',
-    summary: 'Badal Umrah and Hajj services that connect families with verified agents in Makkah and Madinah, with real-time updates and photo proof.',
-    url: 'https://rahlahtravelsandtours.com.ng/',
-    domain: 'rahlahtravelsandtours.com.ng',
-  },
-  {
-    id: 'documenta-ai',
-    image: '/work/documenta-ai.webp',
-    kind: 'AI document tools',
-    summary: 'PDF conversion, table extraction and document automation in one place, from merging files to processing invoices.',
-    url: 'https://documenta-ai-fawn.vercel.app/',
-    domain: 'documenta-ai-fawn.vercel.app',
-  },
-  {
-    id: 'zane',
-    image: '/work/zane.webp',
-    kind: 'Fashion e-commerce',
-    summary: 'An online store for a premium streetwear label, with collections, a lookbook and a journal.',
-    url: 'https://zaneworldwide.vercel.app/',
-    domain: 'zaneworldwide.vercel.app',
-    name: 'ZANE',
-  },
-  {
-    id: 'lamis-logistics',
-    image: '/work/lamis-logistics.webp',
-    kind: 'Logistics website',
-    summary: 'Courier, dispatch and haulage across Lagos and beyond, with coverage, tracking and quote requests.',
-    url: 'https://lamisswiftlogisticsltd.com.ng',
-    domain: 'lamisswiftlogisticsltd.com.ng',
-  },
-  {
-    id: 'zento',
-    image: '/work/zento.webp',
-    kind: 'Fashion store',
-    summary: 'A WooCommerce store for a streetwear brand in Ibadan, with shop, collections and checkout.',
-    url: 'https://zento.com.ng/',
-    domain: 'zento.com.ng',
-    tech: ['WordPress', 'WooCommerce'],
-  },
+  { id: 'medaxis', kind: 'Hospital software', tone: '#1663c7' },
+  { id: 'techcircle', kind: 'Tech marketplace', tone: '#1f5fff' },
+  { id: 'loftyos', kind: 'School website and operating system', tone: '#1f6fd1' },
+  { id: 'optismart', kind: 'Sales and operations portal', tone: '#1673e6' },
+  { id: 'kvc-platform', kind: 'Education platform', tone: '#3c9a3c' },
+  { id: 'ilmforge', kind: 'Learning platform', tone: '#0f7a5c' },
+  { id: 'rahlah', kind: 'Booking platform and app', tone: '#3f7a3a' },
+  { id: 'documenta-ai', kind: 'AI document tools', tone: '#4f6bff' },
+  { id: 'zane', kind: 'Fashion e-commerce', tone: '#7b7f88' },
+  { id: 'zento', kind: 'Fashion store', tone: '#8a8f99' },
 ]
 
-// These live sites are offline right now (paused hosting or no DNS), so they are listed without a link.
-export const offline = new Set(['moraladsemporium', 'bigschool-plus', 'opticonnect', 'hogarf'])
+// These live sites are offline right now (paused hosting), so they are listed without a link.
+export const offline = new Set(['moraladsemporium', 'bigschool-plus', 'opticonnect'])
 
 const featuredIds = new Set(featured.map((f) => f.id))
 
-export type Project = ProjectData & { image?: string; kind?: string; summary: string; liveUrl?: string; domain?: string }
+export type Project = ProjectData & { image?: string; phone?: string; tone?: string; kind?: string; summary: string; liveUrl?: string; domain?: string }
 
-// One list for the whole site: featured details win over the older data where both exist.
-// DocTech Global is a company, shown under Companies, not a product.
+// One list for the whole site. DocTech Global is a company, shown under Companies, not a product.
 const companySites = new Set(['doctech-global'])
-const logoFixes: Record<string, string> = { techcircle: '/logos/techcircle.png' }
-// The OptiSmart portal now runs on its own domain (the old vercel.app copy is paused).
-const linkFixes: Record<string, { demoUrl: string; displayDomain: string }> = {
-  optismart: { demoUrl: 'https://sales.optismart.com.ng', displayDomain: 'sales.optismart.com.ng' },
-}
 
-export const projects: Project[] = PROJECTS.filter((p) => !companySites.has(p.id)).map((raw) => {
-  const p = { ...raw, logoPath: logoFixes[raw.id] ?? raw.logoPath, ...linkFixes[raw.id] }
-  const f = featured.find((x) => x.id === p.id)
+export const projects: Project[] = PROJECTS.filter((p) => !companySites.has(p.id)).map((p) => {
   const live = offline.has(p.id) ? undefined : p.demoUrl
-  if (!f) return { ...p, summary: p.shortDescription, liveUrl: live, domain: live ? p.displayDomain : undefined }
-  return {
-    ...p,
-    title: f.name ?? p.title,
-    image: f.image,
-    kind: f.kind,
-    summary: f.summary,
-    fullDescription: f.summary,
-    liveUrl: f.url,
-    domain: f.domain,
-    techStack: f.tech ?? p.techStack,
-  }
+  const base = { ...p, summary: p.shortDescription, liveUrl: live, domain: live ? p.displayDomain : undefined }
+  const f = featured.find((x) => x.id === p.id)
+  if (!f) return base
+  return { ...base, kind: f.kind, tone: f.tone, image: `/work/${p.id}.webp`, phone: `/work/${p.id}-m.webp` }
 })
 
 const productIds = new Set(products)
