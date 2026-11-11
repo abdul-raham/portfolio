@@ -38,6 +38,19 @@ function Reveal({ children, delay = 0, className }: { children: ReactNode; delay
 // Hides on the way down, returns on the way up, and gets a solid background once off the top.
 export function TopBar({ onSearch }: { onSearch: () => void }) {
   const bar = useRef<HTMLElement>(null)
+  const [menu, setMenu] = useState(false)
+  useEffect(() => {
+    if (!menu) return
+    const close = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(false)
+    document.body.style.overflow = 'hidden'
+    stopScroll(true)
+    window.addEventListener('keydown', close)
+    return () => {
+      document.body.style.overflow = ''
+      stopScroll(false)
+      window.removeEventListener('keydown', close)
+    }
+  }, [menu])
   useEffect(() => {
     let last = window.scrollY
     let frame = 0
@@ -70,13 +83,19 @@ export function TopBar({ onSearch }: { onSearch: () => void }) {
     ['Journey', '#experience'],
     ['Contact', '#contact'],
   ]
+  // Close the menu first; scroll once the page has been unlocked again.
+  const go = (href: string) => {
+    setMenu(false)
+    window.setTimeout(() => scrollToTarget(href), 60)
+  }
   return (
-    <header ref={bar} className="bar">
+    <header ref={bar} className={menu ? 'bar is-open' : 'bar'}>
       <a
         className="bar-name"
         href="#top"
         onClick={(e) => {
           e.preventDefault()
+          setMenu(false)
           scrollToTarget(0)
         }}
       >
@@ -98,7 +117,29 @@ export function TopBar({ onSearch }: { onSearch: () => void }) {
         <button type="button" className="bar-search" onClick={onSearch} aria-label="Search projects (Ctrl K)">
           Search <kbd>Ctrl K</kbd>
         </button>
+        <button type="button" className="bar-menu" aria-expanded={menu} aria-controls="phone-menu" onClick={() => setMenu((m) => !m)}>
+          {menu ? 'Close' : 'Menu'}
+        </button>
       </nav>
+      {/* Phones: the sections as a full-screen list. */}
+      <div id="phone-menu" className="phone-menu" hidden={!menu}>
+        {links.map(([label, href], i) => (
+          <a
+            key={href}
+            href={href}
+            onClick={(e) => {
+              e.preventDefault()
+              go(href)
+            }}
+          >
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            {label}
+          </a>
+        ))}
+        <a className="phone-menu-mail" href={`mailto:${profile.email}`}>
+          {profile.email}
+        </a>
+      </div>
     </header>
   )
 }
@@ -120,7 +161,7 @@ export function Hero() {
         animate={{ clipPath: 'inset(0 0 0% 0)' }}
         transition={{ duration: 1.3, ease: EASE, delay: 0.2 }}
       >
-        <img src="/abdulrahman.webp" width={960} height={1280} alt={`Portrait of ${profile.name}`} />
+        <img src="/abdulrahman.webp" width={960} height={1280} alt={`${profile.name}, co-founder and co-CEO of DocTech Global and EtelectLabs`} fetchPriority="high" />
       </motion.figure>
       <div className="hero-shade" />
       <div className="hero-content">
@@ -289,6 +330,50 @@ export function Products({ onOpen }: { onOpen: (p: Project) => void }) {
 
 /* Selected work ------------------------------------------------------------ */
 
+// A modern phone: side buttons, a status bar with the Dynamic Island in the site's own top colour, and the
+// site's phone screenshot filling the screen below it.
+function inkFor(hex = '#ffffff') {
+  const n = parseInt(hex.slice(1), 16)
+  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 140 ? '#0b0c0f' : '#ffffff'
+}
+
+function Phone({ src, screen = '#ffffff' }: { src: string; screen?: string }) {
+  return (
+    <div className="phone" aria-hidden="true" style={{ '--screen': screen, '--ink': inkFor(screen) } as CSSProperties}>
+      <div className="phone-body">
+        <i className="phone-btn is-action" />
+        <i className="phone-btn is-up" />
+        <i className="phone-btn is-down" />
+        <i className="phone-btn is-power" />
+        <div className="phone-screen">
+          <div className="phone-status">
+            <span className="phone-time">9:41</span>
+            <span className="phone-island" />
+            <span className="phone-icons">
+              <svg viewBox="0 0 18 12">
+                <rect x="0" y="8" width="3" height="4" rx="1" />
+                <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+                <rect x="10" y="3" width="3" height="9" rx="1" />
+                <rect x="15" y="0" width="3" height="12" rx="1" />
+              </svg>
+              <svg viewBox="0 0 16 12">
+                <path d="M8 2.2c2.4 0 4.6.9 6.2 2.5l1.3-1.3A10.6 10.6 0 0 0 8 .4 10.6 10.6 0 0 0 .5 3.4l1.3 1.3A8.8 8.8 0 0 1 8 2.2Zm0 3.6c1.4 0 2.7.5 3.7 1.5L13 6a7 7 0 0 0-10 0l1.3 1.3c1-1 2.3-1.5 3.7-1.5Zm0 3.5c-.6 0-1.1.2-1.5.6L8 11.4l1.5-1.5c-.4-.4-.9-.6-1.5-.6Z" />
+              </svg>
+              <svg viewBox="0 0 27 12">
+                <rect x="0.5" y="0.5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" strokeOpacity="0.4" />
+                <rect x="2" y="2" width="19" height="8" rx="2" />
+                <path d="M24.5 4v4a2 2 0 0 0 0-4Z" opacity="0.4" />
+              </svg>
+            </span>
+          </div>
+          <img src={src} width={560} height={1212} alt="" loading="lazy" />
+          <span className="phone-home" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // The live site on a stage in its own brand colour: the desktop window, with the phone view over one corner.
 function Browser({ project }: { project: Project }) {
   return (
@@ -304,11 +389,7 @@ function Browser({ project }: { project: Project }) {
         </div>
         <img src={project.image} width={1600} height={1000} alt={`Screenshot of ${project.title}, ${project.domain}`} loading="lazy" />
       </div>
-      {project.phone && (
-        <div className="phone" aria-hidden="true">
-          <img src={project.phone} width={560} height={1212} alt="" loading="lazy" />
-        </div>
-      )}
+      {project.phone && <Phone src={project.phone} screen={project.screen} />}
     </div>
   )
 }

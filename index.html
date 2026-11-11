@@ -30,7 +30,7 @@
     <meta property="og:image" content="https://abdulrahmanbakare.com.ng/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Abdulrahman Temitayo Bakare, founder and software engineer" />
+    <meta property="og:image:alt" content="Abdulrahman Temitayo Bakare, co-founder and co-CEO of DocTech Global and EtelectLabs" />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -40,66 +40,112 @@
     <meta name="twitter:image" content="https://abdulrahmanbakare.com.ng/og-image.jpg" />
 
     <!-- Fonts -->
+    <link rel="preload" as="image" href="/abdulrahman.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Schema.org JSON-LD Structured Data for Maximum Search Engine Optimization -->
+    <!-- Who this page is about, with the profile photo, for search engines (schema.org ProfilePage). -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Abdulrahman Temitayo Bakare",
-      "givenName": "Abdulrahman",
-      "additionalName": "Temitayo",
-      "familyName": "Bakare",
-      "alternateName": [
-        "Abdulrahman Bakare",
-        "Bakare Abdulrahman",
-        "Bakare Abdulrahman Temitayo",
-        "Bakare Abdulrahaman Temitayo",
-        "Abdulrahman T. Bakare",
-        "Bakare A. Temitayo"
-      ],
-      "email": "mailto:abdulrahmanbakare001@gmail.com",
-      "jobTitle": "Co-Founder & Co-CEO",
-      "image": "https://abdulrahmanbakare.com.ng/abdulrahman.webp",
-      "url": "https://abdulrahmanbakare.com.ng/",
-      "description": "Abdulrahman Temitayo Bakare (Bakare Abdulrahman) is the co-founder and co-CEO of DocTech Global and EtelectLabs, and a software engineer in Lagos, Nigeria. Builder of MedAxis, TechCircle and live platforms for healthcare, education, commerce and logistics. Electronics and Computer Engineering student at Lagos State University (LASU).",
-      "alumniOf": {
-        "@type": "EducationalOrganization",
-        "name": "Lagos State University",
-        "alternateName": "LASU",
-        "department": "Electronics and Computer Engineering"
-      },
-      "worksFor": [
-        { "@type": "Organization", "name": "DocTech Global", "roleName": "Co-Founder & Co-CEO", "url": "https://doctechglobal.com.ng/", "email": "info@doctechglobal.com.ng" },
-        { "@type": "Organization", "name": "EtelectLabs", "roleName": "Co-Founder & Co-CEO", "url": "https://etelectlabs.org/", "email": "info@etelectlabs.org" }
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/",
-        "https://doctechglobal.com.ng/",
-        "https://etelectlabs.org/",
-        "https://medaxis.com.ng",
-        "https://techcircle.com.ng",
-        "https://github.com/abdul-raham"
-      ],
-      "knowsAbout": [
-        "Software Engineering",
-        "System Architecture",
-        "UI/UX & Product Design",
-        "HealthTech Systems",
-        "Hospital Billing & HMO Claim Automation",
-        "DocTech Global Platforms",
-        "MedAxis Rx",
-        "DocTech Forms",
-        "LASU Portal v2",
-        "TechCircle POS & E-Commerce",
-        "MedAxis Claims Audit",
-        "DocTech Sign",
-        "LASU Course Registration System",
-        "CommerceTech",
-        "B2B Enterprise Platforms"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://abdulrahmanbakare.com.ng/#website",
+          "url": "https://abdulrahmanbakare.com.ng/",
+          "name": "Abdulrahman Temitayo Bakare",
+          "publisher": {
+            "@id": "https://abdulrahmanbakare.com.ng/#person"
+          }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://abdulrahmanbakare.com.ng/#profile",
+          "url": "https://abdulrahmanbakare.com.ng/",
+          "name": "Abdulrahman Temitayo Bakare, Co-Founder and Co-CEO",
+          "primaryImageOfPage": {
+            "@id": "https://abdulrahmanbakare.com.ng/#photo"
+          },
+          "mainEntity": {
+            "@id": "https://abdulrahmanbakare.com.ng/#person"
+          },
+          "dateModified": "2026-11-11"
+        },
+        {
+          "@type": "ImageObject",
+          "@id": "https://abdulrahmanbakare.com.ng/#photo",
+          "url": "https://abdulrahmanbakare.com.ng/abdulrahman-bakare.jpg",
+          "contentUrl": "https://abdulrahmanbakare.com.ng/abdulrahman-bakare.jpg",
+          "width": 960,
+          "height": 1280,
+          "caption": "Abdulrahman Temitayo Bakare, co-founder and co-CEO of DocTech Global and EtelectLabs",
+          "creditText": "Abdulrahman Temitayo Bakare"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://abdulrahmanbakare.com.ng/#person",
+          "name": "Abdulrahman Temitayo Bakare",
+          "givenName": "Abdulrahman",
+          "additionalName": "Temitayo",
+          "familyName": "Bakare",
+          "alternateName": [
+            "Abdulrahman Bakare",
+            "Bakare Abdulrahman",
+            "Bakare Abdulrahman Temitayo",
+            "Abdulrahman T. Bakare"
+          ],
+          "jobTitle": "Co-Founder and Co-CEO",
+          "description": "Co-founder and co-CEO of DocTech Global and EtelectLabs, and a software engineer in Lagos, Nigeria. Builder of MedAxis, TechCircle and live platforms for healthcare, education, commerce and logistics.",
+          "url": "https://abdulrahmanbakare.com.ng/",
+          "image": {
+            "@id": "https://abdulrahmanbakare.com.ng/#photo"
+          },
+          "email": "mailto:abdulrahmanbakare001@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Lagos",
+            "addressCountry": "NG"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Lagos State University",
+            "alternateName": "LASU",
+            "url": "https://lasu.edu.ng/"
+          },
+          "worksFor": [
+            {
+              "@type": "Organization",
+              "name": "DocTech Global",
+              "url": "https://doctechglobal.com.ng/",
+              "email": "info@doctechglobal.com.ng"
+            },
+            {
+              "@type": "Organization",
+              "name": "EtelectLabs",
+              "url": "https://etelectlabs.org/",
+              "email": "info@etelectlabs.org"
+            }
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/abdulrahman-bakare-5958b5364/",
+            "https://github.com/abdul-raham"
+          ],
+          "knowsAbout": [
+            "Software engineering",
+            "System architecture",
+            "Product design",
+            "Healthcare software",
+            "Education platforms",
+            "E-commerce",
+            "React",
+            "TypeScript",
+            "Next.js",
+            "Node.js",
+            "PostgreSQL",
+            "Supabase"
+          ]
+        }
       ]
     }
     </script>
